@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Carbon Emission Tracker</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  </head>
+  <body>
+    <div class="dashboard-container">
+        <header>
+            <h1>Carbon Emission Tracker</h1>
+            <p class="subtitle">Calculate and track your daily carbon emissions</p>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="left-column">
+                <!-- Quiz Section -->
+                <div class="quiz-section card">
+                    <h2>Quick Carbon Assessment</h2>
+                    <p class="section-description">Answer these questions to calculate your carbon footprint</p>
+                    <form id="carbonQuiz">
+                        <div class="quiz-question">
+                            <div class="question-header" onclick="this.parentElement.classList.toggle('active')">
+                                <h3>Transport</h3>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="question-content">
+                                <div class="transport-options">
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="electric" required>
+                                            <span class="label-text">Electric Vehicle (EV)</span>
+                                        </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="electric" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">0g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="petrol">
+                                            <span class="label-text">Petrol Car</span>
+                                        </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="petrol" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">180g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="diesel">
+                                            <span class="label-text">Diesel Car</span>
+                                        </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="diesel" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">140g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="hybrid">
+                                            <span class="label-text">Hybrid Car</span>
+                                        </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="hybrid" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">120g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="public">
+                                            <span class="label-text">Public Transport</span>
+                                        </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="public" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">1200g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                        <label class="radio-label">
+                                            <input type="radio" name="transport" value="walk">
+                                            <span class="label-text">Walking/Biking</span>
+                                    </label>
+                                        <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="walk" min="0" max="100" value="0">
+                                            <div class="range-details">
+                                                <span class="range-value">0 km/day</span>
+                                            <span class="emission-value">0g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="transport-option">
+                                    <label class="radio-label">
+                                            <input type="radio" name="transport" value="wfh">
+                                            <span class="label-text">Work from Home</span>
+                                    </label>
+                                <div class="distance-input">
+                                            <input type="range" class="transport-distance" data-type="wfh" min="0" max="100" value="0">
+                                        <div class="range-details">
+                                            <span class="range-value">0 km/day</span>
+                                                <span class="emission-value">0g CO2/km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <div class="question-header" onclick="this.parentElement.classList.toggle('active')">
+                                <h3>Household Appliances</h3>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="question-content">
+                                <p class="section-description">Select the appliances you use regularly</p>
+                                <div class="appliances-grid">
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="microwave">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Microwave</div>
+                                            <span class="appliance-emission">0.945 kWh (400g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="washing_machine">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Washing Machine</div>
+                                            <span class="appliance-emission">0.63 kWh (275g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="tumble_dryer">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Tumble Dryer</div>
+                                            <span class="appliance-emission">2.50 kWh (1000g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="kettle">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Water Kettle</div>
+                                            <span class="appliance-emission">0.11 kWh (50g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="standard_bulb">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Standard Light Bulb</div>
+                                            <span class="appliance-emission">100W, 4hrs (172g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="eco_bulb">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Eco-friendly Light Bulb</div>
+                                            <span class="appliance-emission">18W, 4hrs (30g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="shower">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Electric water heater (10 min)</div>
+                                            <span class="appliance-emission">2,000g CO2</span>
+                                        </div>
+                                    </label>
+
+                                   
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="electric_hob">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Electric Hob</div>
+                                            <span class="appliance-emission">1.56 kWh (675g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="gas_hob">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Gas Hob</div>
+                                            <span class="appliance-emission">0.9 kWh (167g CO2)</span>
+                                        </div>
+                                    </label>
+
+                                    <label class="appliance-option">
+                                        <input type="checkbox" name="appliances" value="air_con">
+                                        <div class="appliance-details">
+                                            <div class="appliance-name">Cooling (air con) average home</div>
+                                            <span class="appliance-emission">2,000g CO2</span>
+                                    </div>
+                                    </label>
+
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <div class="question-header" onclick="this.parentElement.classList.toggle('active')">
+                                <h3>Diet</h3>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="question-content">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="diet" value="vegan" required>
+                                        <span class="label-text">
+                                            Plants (vegan/vegetarian)
+                                            <span class="emission-value">2,470g CO2/day</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="diet" value="mixed">
+                                        <span class="label-text">
+                                            Equal opportunist (mixed)
+                                            <span class="emission-value">5,370g CO2/day</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="diet" value="carnivore">
+                                        <span class="label-text">
+                                            Carnivore
+                                            <span class="emission-value">10,240g CO2/day</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-question">
+                            <div class="question-header" onclick="this.parentElement.classList.toggle('active')">
+                                <h3>Home Energy Source</h3>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                            <div class="question-content">
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="hydro" required>
+                                        <span class="label-text">
+                                            Hydroelectric Powerhouse
+                                            <span class="emission-value">120g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="wind">
+                                        <span class="label-text">
+                                            Wind Turbine
+                                            <span class="emission-value">330g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="solar">
+                                        <span class="label-text">
+                                            Solar
+                                            <span class="emission-value">1200g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="nuclear">
+                                        <span class="label-text">
+                                            Nuclear Powerplant
+                                            <span class="emission-value">360g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="natural_gas">
+                                        <span class="label-text">
+                                            Natural Gas Powerplant
+                                            <span class="emission-value">28000g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="oil">
+                                        <span class="label-text">
+                                            Oil Powerplant
+                                            <span class="emission-value">35200g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="energy" value="coal">
+                                        <span class="label-text">
+                                            Coal Powerplant
+                                            <span class="emission-value">50000g CO2/kWh</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit">Calculate My Footprint</button>
+                    </form>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="summary-section card">
+                    <h2>Your Impact</h2>
+                    <div class="summary-stats">
+                        <div class="stat">
+                            <h3>Today</h3>
+                            <p id="todayEmissions">0 kg CO2</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Weekly Avg</h3>
+                            <p id="weeklyAverage">0 kg CO2</p>
+                        </div>
+                        <div class="stat">
+                            <h3>Monthly</h3>
+                            <p id="monthlyTotal">0 kg CO2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <!-- Charts Section -->
+                <div class="charts-section card">
+                    <h2>Today's Breakdown</h2>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="charts-section card">
+                    <h2>Weekly Trend</h2>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
